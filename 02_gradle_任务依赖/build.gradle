@@ -1,0 +1,24 @@
+//任务依赖: 比如t2依赖t1的话,执行gradle t2会先执行t1
+
+task t1 {
+    doLast{
+        println "t1..."
+    }
+}
+
+//第一种依赖写法
+task t2(dependsOn:t1){
+    doLast{
+        println "t2..."
+    }
+}
+
+//第二种依赖写法
+task t3 {
+    doLast{
+        println "t3..."
+    }
+}
+
+t3.dependsOn(t1) //t3依赖t1
+

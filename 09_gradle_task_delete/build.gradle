@@ -1,0 +1,23 @@
+task t1{
+    println "t1-->configration"
+   doLast{
+       println "t1-->execution"
+   }
+}
+
+task t2{
+    println "t2-->configration"
+   doLast{
+       println "t2-->execution"
+   }
+}
+
+task t3(type:Delete){
+    println "t2-->configration" //configration阶段执行
+
+    // delete 'aaa' //execution阶段执行
+    // followSymlinks = true
+}
+// t1.mustRunAfter(t2)
+t3.dependsOn(t1)
+t1.dependsOn(t2)

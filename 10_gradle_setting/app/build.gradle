@@ -1,0 +1,15 @@
+task t1{
+    println "t1--> configuration"
+
+    doLast{
+        println "t1--> execution"
+    }
+}
+
+task t2{
+    println "t2--> configuration"
+
+    doLast{
+        println "t2--> execution"
+    }
+}

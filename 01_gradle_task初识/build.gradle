@@ -1,0 +1,45 @@
+/*
+ *gradle hello 即可执行
+ *
+ *如果只看结果的话,不看流程可加-q参数, 即: gradle -q hello
+ *
+ */
+
+//1.hellow
+task hello{
+    println "hello configration" //第2阶段configration阶段执行
+    println "hello configration, project:"+project
+    println "hello configration, rootProject:"+rootProject
+    
+    doFirst{
+        println "hello doFirst" //第三阶段execution阶段执行
+    }
+
+    doLast{
+        println "hello doLast" //第三阶段execution阶段执行
+        println "versioncode: "+getVersionCode()
+    }
+    
+}
+
+//2.调用Groovy中的函数
+task callGroovy{
+    doLast{
+        def origin = "abc" //现在变量的定义必须要使用def关键字
+        def after = origin.toUpperCase()
+        
+        println "origin: "+origin
+        println "after: "+after
+
+        4.times{
+            println "$it" //打印1 2 3 4 
+        }
+    }
+}
+
+def getVersionCode() {
+    def date = new Date();
+    def tTime = date.format('yyMMddHH'); //yyMMddHHmm 会导致int越界
+    println "tTime: "+tTime//String 类型
+    return Integer.parseInt(tTime) //转int
+}

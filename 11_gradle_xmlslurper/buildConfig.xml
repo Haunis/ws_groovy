@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config>
+    <default>
+        <int name="LOG_LEVEL_NONE">0</int>
+        <int name="LOG_LEVEL_VERBOSE">1</int>
+        <int name="LOG_LEVEL_DEBUG">2</int>
+        <int name="LOG_LEVEL_INFO">3</int>
+        <int name="LOG_LEVEL_WARN">4</int>
+        <int name="LOG_LEVEL_ERROR">5</int>
+        <int name="LOG_LEVEL_CURRENT">5</int>
+    </default>
+    <DEV>
+        <String name="BASE_URL">https://www.baidu.com.base</String>
+        <String name="SAFA_URL">https://www.baidu.com.safa</String>
+        <String name="PKI_URL">https://www.baidu.com.pki</String>
+        <String name="QRCODE_URL">https://www.baidu.com.qrcode</String>
+        <String name="BURYPOINT_URL">http://www.baidu.com.burypoint</String>
+        <boolean name="WM_DEV">true</boolean>
+        <boolean name="BLE_DEV">true</boolean>
+        <String name="WX_APPID">wxdad3c240c25650d3</String>
+
+    </DEV>
+    
+</config>

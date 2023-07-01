@@ -1,0 +1,34 @@
+/**
+*
+*  运行 gradle hello
+*
+*/
+
+task hello {
+    println 'execute hello task ...'
+
+    // initBuildConfig('default',{ a, b->println a + '__' + b }) //正常写法, 传入两个参数，第二个参数是闭包(函数)
+    // initBuildConfig('default') { a, b, c ->println a + '__' + b + '__' + c } //也ok
+
+    // def func = { a, b -> println a + ' ' + b } //定义匿名函数，gradle里必须要带def关键字
+    // initBuildConfig('default', func) //ok
+    // initBuildConfig 'default', func //ok
+    // initBuildConfig ('default') func //error
+    }
+
+def initBuildConfig(String key, Closure closure) {
+    // def language = new XmlSlurper().parse("${rootDir}/app/buildConfig.xml")
+    def language = new XmlSlurper().parse('buildConfig.xml')
+    language.childNodes().findAll { it.name == key }.each {
+        it.childNodes().each {
+            def val = "${it.children[0].value}"
+            println 'val----------------->' + val
+
+            if ("${it.name}" == 'String') val = "\"" + val + "\""
+
+            println "\${it.name}:  " + "${it.name}"
+            closure "${it.name}", "${it.attributes.name}", val //调用闭包，传入三个参数： 类型，key，value
+
+        }
+    }
+}

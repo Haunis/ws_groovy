@@ -1,0 +1,14 @@
+//自定义属性: 通过task.ext设置,如 ext.age = 18
+
+task t1{
+    ext.age = 18 //设置额外属性
+    doLast{
+        println "t1 ...$it.age"
+    }
+}
+
+task t2{
+    doLast{
+        println "t2 ... t1.age=$t1.age"
+    }
+}

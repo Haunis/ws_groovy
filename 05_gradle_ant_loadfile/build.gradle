@@ -1,0 +1,18 @@
+/**
+ * 使用ant对象的loadfile方法加载文件。
+ * ant类是gradle中第一个类，也说明gradle是基于ant的。
+ */
+
+task loadfile {
+    doLast{
+        // def files = file('../test').listFiles().sort()
+        def files = file('.').listFiles().sort()
+        files.each{File file ->
+                if(file.isFile() & file.name.contains("txt")){
+                        ant.loadfile(srcFile:file,property:file.name)
+                        println " *** $file.name *** "
+                        println "${ant.properties[file.name]}"
+                }
+        }
+    }
+}

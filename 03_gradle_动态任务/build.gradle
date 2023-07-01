@@ -1,0 +1,15 @@
+/**
+    动态任务:不创建具体的任务,而是在执行的过程中,动态地创建
+
+    执行: gradle task1    
+*/
+
+4.times {
+    counter->task "task$counter"  { //conter最大只能是3
+        doLast{
+            println "I'm task number $counter"
+        }
+    }
+}
+
+task0.dependsOn task1,task2 //通过api调用依赖任务

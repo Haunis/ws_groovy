@@ -1,0 +1,55 @@
+
+
+task t1(type: Copy){
+    println "t1--> load succed" // executed always,执行其他任务时,此代码也会执行
+
+    delete "dst" //在configration阶段执行???
+
+    // //删除当前目录下文件名含有"abc_copy"的文件
+    // FileTree tree = fileTree(dir: 'dst')
+    // tree.each {
+    //     File file ->
+    //         if (file.toString().contains("abc_copy")) {
+    //             delete file
+    //             println "t1--> delete " + file
+    //         }
+    // }
+
+    //from,into,include 不能放在doLast{}里....
+    from('src/') //not executed. 执行其他任务时,此代码不会执行
+    into('dst/') //not executed. 执行其他任务时,此代码不会执行;没dst文件夹则创建
+    include('*.txt') //include ,exclude参数来设置过滤
+    
+    rename('abc.txt', 'abc_copy.txt')//重命名
+    
+    println "t1 -->task makeapk configration  end" //
+}
+
+def copyFile(String src_file, dst_file) {
+    println "t1--> copyFile from $src_file, to $dst_file ,<< called"+project
+    //拷贝文件函数，用于将最后的生成物拷贝到指定的目录
+    def srcFile = new File(src_file)
+    def targetFile = new File(dst_file)
+    targetFile.withOutputStream {
+        os ->
+            srcFile.withInputStream {
+            ins ->
+                os << ins  //利用OutputStream的<<操作符重载，完成从inputstream到OutputStream的输出
+        }
+    }
+}
+
+tasks.getByName("t1") {
+    println "getByName --> exetuted ..."
+    it.doLast {
+        println "getByName -->task getByName project_name:$project.name,  it=$it"
+        // copyFile("src/abc.txt","dst/abc_22copy.txt")//ok
+
+
+        //不能拷贝
+//        Copy myCopy = task(myCopy, type: Copy)
+//        myCopy.from 'build/outputs/apk/debug/'
+//        myCopy.into 'apks'
+//        myCopy.include('*.apk')
+    }
+}

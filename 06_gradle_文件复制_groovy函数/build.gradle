@@ -1,0 +1,30 @@
+def copyFile(String src_file, dst_file) {
+    println "t1--> copyFile from $src_file, to $dst_file ,<< called"+project
+    //拷贝文件函数，用于将最后的生成物拷贝到指定的目录
+    def srcFile = new File(src_file)
+    def targetFile = new File(dst_file)
+    targetFile.withOutputStream {
+        os ->
+            srcFile.withInputStream {
+            ins ->
+                os << ins  //利用OutputStream的<<操作符重载，完成从inputstream到OutputStream的输出
+        }
+    }
+}
+
+
+task t1(){
+    println "t1--> load succed"
+
+    //删除当前目录下文件名含有"abc_copy"的文件
+    FileTree tree = fileTree(dir: '.')
+    tree.each {
+        File file ->
+            if (file.toString().contains("abc_copy")) {
+                delete file
+                println "t1--> delete " + file
+            }
+    }
+
+    copyFile("abc.txt","abc_copy.txt")
+}
